@@ -1,0 +1,22 @@
+map $host $target_host {
+<% @redirects.each do |from, to| -%>
+  <%= from %> <%= to %>;
+<% end -%>
+}
+
+map $http_x_forwarded_port $port_part {
+  80 "";
+  443 "";
+  default ":$http_x_forwarded_port";
+}
+
+server {
+  listen <%= ENV.fetch 'PORT', '80' %>;
+  server_name _;
+  keepalive_timeout 5;
+  client_max_body_size <%= ENV.fetch 'CLIENT_MAX_BODY_SIZE', '1' %>M;
+
+  location '/' {
+    return 301 $http_x_forwarded_proto://$target_host$port_part$request_uri;
+  }
+}
