@@ -4,12 +4,6 @@ map $host $target_host {
 <% end -%>
 }
 
-map $http_x_forwarded_port $port_part {
-  80 "";
-  443 "";
-  default ":$http_x_forwarded_port";
-}
-
 server {
   listen <%= ENV.fetch 'PORT', '80' %>;
   server_name _;
@@ -22,6 +16,6 @@ server {
   }
 
   location '/' {
-    return 301 $http_x_forwarded_proto://$target_host$port_part$request_uri;
+    return 301 $http_x_forwarded_proto://$target_host$request_uri;
   }
 }
