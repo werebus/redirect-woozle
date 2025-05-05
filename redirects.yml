@@ -1,5 +1,4 @@
 ---
 redirects:
   'default': 'wereb.us'
-  'example.com': 'example.org'
-  'banana.page': 'banana.co.uk'
+  'test-redirect.wereb.us': 'example.com'
