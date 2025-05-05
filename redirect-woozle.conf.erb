@@ -16,6 +16,11 @@ server {
   keepalive_timeout 5;
   client_max_body_size <%= ENV.fetch 'CLIENT_MAX_BODY_SIZE', '1' %>M;
 
+  location = '/up' {
+    default_type text/json;
+    return 200 '{ "status": "ok" }';
+  }
+
   location '/' {
     return 301 $http_x_forwarded_proto://$target_host$port_part$request_uri;
   }
