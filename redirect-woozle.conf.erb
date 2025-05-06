@@ -25,7 +25,7 @@ server {
     <% http_codes.each do |code| %>
       <% if (300..399).include? code %>
         if ($redirect_code = <%= code %>) {
-          return <%= code %> $http_x_forwarded_proto://$target_host$request_uri;
+          return <%= code %> $http_x_forwarded_proto://$target_host_or_body$request_uri;
         }
       <% else %>
         if ($redirect_code = <%= code %>) {
