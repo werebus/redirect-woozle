@@ -1,4 +1,4 @@
-map $host $target_host {
+map $host $target_host_or_body {
 <% @redirects.each do |redirect| -%>
   <%= redirect['from'] %> <%= redirect['to'] %>;
 <% end -%>
@@ -22,6 +22,16 @@ server {
   }
 
   location '/' {
-    return $redirect_code $http_x_forwarded_proto://$target_host$request_uri;
+    <% http_codes.each do |code| %>
+      <% if (300..399).include? code %>
+        if ($redirect_code = <%= code %>) {
+          return <%= code %> $http_x_forwarded_proto://$target_host$request_uri;
+        }
+      <% else %>
+        if ($redirect_code = <%= code %>) {
+          return <%= code %> $target_host_or_body;
+        }
+      <% end -%>
+    <% end %>
   }
 }

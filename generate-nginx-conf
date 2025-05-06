@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require 'erb'
+require 'net/http'
 require 'optparse'
 require 'yaml'
 
@@ -13,6 +14,10 @@ class GenerateNginxConf
 
   def generate
     ERB.new(@template.read, trim_mode: '-').result(binding)
+  end
+
+  def http_codes
+    Net::HTTPResponse::CODE_TO_OBJ.keys.map(&:to_i)
   end
 end
 
