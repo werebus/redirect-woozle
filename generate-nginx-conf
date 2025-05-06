@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'erb'
+require 'optparse'
+require 'yaml'
+
+class GenerateNginxConf
+  def initialize(redirect_config, template)
+    @redirects = YAML.load_file(redirect_config)['redirects']
+    @template = template
+  end
+
+  def generate
+    ERB.new(@template.read, trim_mode: '-').result(binding)
+  end
+end
+
+OptionParser.new do |parser|
+  parser.banner = 'Usage: generate-nginx-conf [options] [template path]'
+
+  @redirects_file = 'redirects.yml'
+  parser.on('-cFILE', '--config FILE', 'Redirect config YAML file - default redirects.yml') do |file|
+    @redirects_file = file
+  end
+
+  parser.on('-h', '--help', 'Display this help message') do
+    puts parser
+    exit
+  end
+end.parse!
+
+puts GenerateNginxConf.new(@redirects_file, ARGF).generate

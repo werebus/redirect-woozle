@@ -11,8 +11,8 @@ COPY Gemfile Gemfile.lock .ruby-version ./
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
-COPY redirects.yml redirect-woozle.conf.erb generate_nginx_conf.rb ./
-RUN bundle exec ruby generate_nginx_conf.rb > redirect-woozle.conf
+COPY redirects.yml redirect-woozle.conf.erb generate-nginx-conf.rb ./
+RUN bundle exec ./generate-nginx-conf --config redirects.yml redirect-woozle.conf.erb > redirect-woozle.conf
 
 FROM docker.io/library/nginx:1.28.0-alpine
 COPY --from=build /app/redirect-woozle.conf /etc/nginx/conf.d/default.conf
