@@ -1,6 +1,12 @@
 map $host $target_host {
-<% @redirects.each do |from, to| -%>
-  <%= from %> <%= to %>;
+<% @redirects.each do |redirect| -%>
+  <%= redirect['from'] %> <%= redirect['to'] %>;
+<% end -%>
+}
+
+map $host $redirect_code {
+<% @redirects.each do |redirect| -%>
+  <%= redirect['from'] %> <%= redirect['code'] || 301 %>;
 <% end -%>
 }
 
@@ -16,6 +22,6 @@ server {
   }
 
   location '/' {
-    return 301 $http_x_forwarded_proto://$target_host$request_uri;
+    return $redirect_code $http_x_forwarded_proto://$target_host$request_uri;
   }
 }

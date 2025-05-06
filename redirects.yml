@@ -1,4 +1,29 @@
 ---
 redirects:
-  'default': 'wereb.us'
-  'test-redirect.wereb.us': 'example.com'
+  - from: 'default'
+    to: 'wereb.us'
+    code: 302
+  - from: 'map.moretti.camp'
+    to: 'goo.gl/maps/RYmbBzpFbo22'
+    code: 302
+  - from: 'fm.mm.vu'
+    to: 'www.last.fm/user/werebus'
+    code: 301
+  - from: 'gh.mm.vu'
+    to: 'github.com/werebus'
+    code: 301
+  - from: 'ks.mm.vu'
+    to: 'www.kickstarter.com/profile/2003579054'
+    code: 301
+  - from: 'squirrelsattic.shop'
+    to: 'squirrelsattic.com'
+    code: 301
+  - from: 'squirrelsattic.com'
+    to: 'www.etsy.com/shop/SquirrelsAttic'
+    code: 302
+  - from: 'umasstransit.it'
+    to: 'github.com/umts'
+    code: 302
+  - from: 'umasstransit.rodeo'
+    to: 'results.umasstransit.rodeo'
+    code: 302
