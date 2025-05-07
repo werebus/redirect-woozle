@@ -27,3 +27,6 @@ redirects:
   - from: 'umasstransit.rodeo'
     to: 'results.umasstransit.rodeo'
     code: 302
+  - from: 'www.umasstransit.rodeo'
+    to: 'results.umasstransit.rodeo'
+    code: 302
