@@ -22,10 +22,7 @@ proxy:
   hosts: [ <%= redirect_hosts.join(', ') %> ]
 
 registry:
-  server: ghcr.io
-  username: werebus
-  password:
-    - KAMAL_REGISTRY_PASSWORD
+  server: localhost:5555
 
 builder:
   arch: amd64
